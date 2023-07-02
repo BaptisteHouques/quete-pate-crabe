@@ -59,7 +59,7 @@ def combat():
                 if not adversaires:
                     return "Félicitations ! Vous avez vaincu tous les adversaires."
                 else:
-                    return f"Vous avez vaincu {adversaire_actuel} ! Choisissez un nouvel adversaire."
+                    return render_template('combatGagne.html', adversaire_actuel=adversaire_actuel)
 
         elif action == 'esquiver':
             message = "Vous avez esquivé l'attaque!" if esquiver() else action_adversaire(adversaire_actuel, personnage)
