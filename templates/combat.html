@@ -2,21 +2,25 @@
 <html>
 <head>
     <title>Combat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/combat.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/background.css') }}">
 </head>
 <body>
-<h1>Combat contre {{ adversaire }}</h1>
-<h2>{{ adversaire }} a {{ adversaires[adversaire]['vie'] }} points de vie restants.</h2>
-<h2>Votre personnage, {{ personnage }}, a {{ characters[personnage]['vie'] }} points de vie restants.</h2>
-<form action="/combat" method="post">
-    <input type="hidden" name="action" value="attaquer">
-    <input type="submit" value="Attaquer">
-</form>
-<form action="/combat" method="post">
-    <input type="hidden" name="action" value="esquiver">
-    <input type="submit" value="Esquiver">
-</form>
-<div>
-    <p>{{ message }}</p>
-</div>
+    <h1>Combat contre {{ adversaire }}</h1>
+    <h2>{{ adversaire }} a {{ adversaires[adversaire]['vie'] }} points de vie restants.</h2>
+    <h2>Votre personnage, {{ personnage }}, a {{ characters[personnage]['vie'] }} points de vie restants.</h2>
+    <div id="actions">
+        <form action="/combat" method="post">
+            <input type="hidden" name="action" value="attaquer">
+            <input type="submit" value="Attaquer" class="button-1">
+        </form>
+        <form action="/combat" method="post">
+            <input type="hidden" name="action" value="esquiver">
+            <input type="submit" value="Esquiver" class="button-2">
+        </form>
+    </div>
+    <div>
+        <p>{{ message }}</p>
+    </div>
 </body>
 </html>

@@ -1,20 +1,9 @@
 from flask import Flask, render_template, request, redirect, session
 import random
+from data import adversaires, characters
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
-
-characters = {
-    'boxeur': {'vie': 100, 'force': 30},
-    'voleur': {'vie': 80, 'force': 40},
-    'gros': {'vie': 120, 'force': 20}
-}
-
-adversaires = {
-    'Sally': {'vie': 100},
-    'Patric': {'vie': 120},
-    'Carlos': {'vie': 80}
-}
 
 def attaquer(adversaire, personnage):
     force_personnage = characters[personnage]['force']
