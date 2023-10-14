@@ -7,5 +7,6 @@ characters = {
 adversaires = {
     'Sally': {'vie': 100},
     'Patric': {'vie': 120},
-    'Carlos': {'vie': 80}
+    'Carlos': {'vie': 80},
+    'Plankton': {'vie': 200}
 }
