@@ -4,12 +4,12 @@ a = Analysis(
     ['app.py'],
     pathex=[],
     binaries=[],
-    datas=[('templates/', 'templates/')],  # Cette ligne inclut le dossier templates
+    datas=[('templates/', 'templates/'), ('static/', 'static/')],  # Cette ligne inclut le dossier templates
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['tests', '__pycache__', 'README.md', '.git', 'build', 'data.py', 'selenium', 'test_action_adverse.py', 'test_attaque.py', 'test_esquive.py'],
     noarchive=False,
 )
 pyz = PYZ(a.pure)

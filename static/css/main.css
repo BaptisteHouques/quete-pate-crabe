@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Gilmer Regular";
+    src: url("../fonts/gilmer-regular.otf");
+    font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+  font-family: "Gilmer Regular", sans-serif;
+}
