@@ -9,14 +9,15 @@
     <h1>Combat contre {{ ennemie }}</h1>
     <h2>{{ ennemie }} a {{ ennemies[ennemie]['hp'] }} points de vie restants.</h2>
     <h2>Votre personnage, {{ character }}, a {{ characters[character]['hp'] }} points de vie restants.</h2>
+    <br><br><br><br>
     <div id="actions">
         <form action="/fight" method="post">
             <input type="hidden" name="action" value="attack">
-            <input type="submit" value="attack" class="button-1">
+            <input type="submit" value="Attaque" class="button-1" aria-label="Attaquer">
         </form>
         <form action="/fight" method="post">
             <input type="hidden" name="action" value="dodge">
-            <input type="submit" value="dodge" class="button-2">
+            <input type="submit" value="Esquive" class="button-2" aria-label="Esquiver">
         </form>
     </div>
     <div>

@@ -23,7 +23,7 @@ def FncActionEnnemie(ennemie, character):
         attack_ennemie = random.randint(10, 30)
         characters[character]['hp'] -= attack_ennemie
         characters[character]['hp'] = max(0, characters[character]['hp']) # Evite la condition if
-        return f"{ennemie} vous a attaqué et vous a infligé {attack_ennemie} points de dégâts." if characters[character]['vie'] > 0 else "Vous êtes mort ..."
+        return f"{ennemie} vous a attaqué et vous a infligé {attack_ennemie} points de dégâts." if characters[character]['hp'] > 0 else "Vous êtes mort ..."
 
     elif action == 'Dodge':
         return f"{ennemie} a esquivé votre attaque." if FncDodge() else ''
@@ -46,7 +46,7 @@ def fight():
 
     character = session['character']
     if 'ennemie' not in session:
-        session['character'] = random.choice(list(ennemies.keys()))
+        session['ennemie'] = random.choice(list(ennemies.keys()))
 
     actual_ennemie = session['ennemie']
     message = ""
