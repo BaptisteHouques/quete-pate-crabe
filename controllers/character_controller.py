@@ -1,6 +1,6 @@
 # game/controllers/character_controller.py
 from flask import Blueprint, render_template, request
-from game.models.character import Character
+from models import Character
 
 character_controller = Blueprint('character_controller', __name__)
 

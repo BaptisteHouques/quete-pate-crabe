@@ -1,5 +1,5 @@
-from models.personnage import Personnage
+from models import Character
 
-class Bob(Personnage):
+class Bob(Character):
     def __init__(self):
-        super().__init__("Bob l'éponge", vie=100, force=10)
+        super().__init__("Bob l'éponge", hp=100, str=10)

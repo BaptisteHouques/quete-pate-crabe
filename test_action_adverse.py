@@ -1,23 +1,23 @@
 import unittest
-from app import action_adversaire
-from data import adversaires, characters
+from app import FncActionEnnemie
+from data import ennemies, characters
 
 
-class TestActionAdversaire(unittest.TestCase):
+class TestActionEnnemie(unittest.TestCase):
     def test_action_adversaire(self):
-        adversaire = 'Sally'
-        personnage = 'boxeur'
+        ennemie = 'Sally'
+        character = 'Boxer'
 
         # Exécution de la fonction à tester
-        resultat = action_adversaire(adversaire, personnage)
+        result = FncActionEnnemie(ennemie, character)
 
         # Vérification des résultats attendus
-        if resultat.startswith(f"{adversaire} vous a attaqué"):
+        if result.startswith(f"{ennemie} vous a attaqué"):
             # Vérification si l'attaque a été infligée
-            self.assertLess(characters[personnage]['vie'], 100)
-        elif resultat.startswith(f"{adversaire} a esquivé"):
+            self.assertLess(characters[character]['hp'], 100)
+        elif result.startswith(f"{ennemie} a esquivé"):
             # Vérification si l'attaque a été esquivée
-            self.assertEqual(characters[personnage]['vie'], 100)
+            self.assertEqual(characters[character]['hp'], 100)
 
 if __name__ == '__main__':
     unittest.main()

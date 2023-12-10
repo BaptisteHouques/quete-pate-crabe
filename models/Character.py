@@ -1,8 +1,8 @@
 class Character:
-    def __init__(self, nom, force):
-        self.nom = nom
-        self.vie = vie
-        self.force = force
+    def __init__(self, name, hp, str):
+        self.name = name
+        self.hp = hp
+        self.str = str
 
     def __str__(self):
-        return f"{self.nom} : Vie {self.vie}, Force {self.force}"
+        return f"{self.name} : Vie {self.hp}, Force {self.str}"

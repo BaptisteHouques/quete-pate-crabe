@@ -1,73 +1,78 @@
 from flask import Flask, render_template, request, redirect, session
 import random
-from data import adversaires, characters
+from data import ennemies, characters
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
-def attaquer(adversaire, personnage):
-    force_personnage = characters[personnage]['force']
-    adversaires[adversaire]['vie'] -= force_personnage
-    adversaires[adversaire]['vie'] = max(0, adversaires[adversaire]['vie']) # Evite la condition if
+def FncAttack(ennemie, character):
+    str_character = characters[character]['str']
+    ennemies[ennemie]['hp'] -= str_character
+    ennemies[ennemie]['hp'] = max(0, ennemies[ennemie]['hp']) # Evite la condition if
 
-    message_adversaire = action_adversaire(adversaire, personnage) if adversaires[adversaire]['vie'] > 0 else ''
-    return f"Vous avez infligé {force_personnage} points de dégâts à {adversaire}. {message_adversaire}"
+    message_ennemie = FncActionEnnemie(ennemie, character) if ennemies[ennemie]['hp'] > 0 else ''
+    return f"Vous avez infligé {str_character} points de dégâts à {ennemie}. {message_ennemie}"
 
-def esquiver():
+def FncDodge():
     return random.choice([True, False]) # Evite la condition if
 
-def action_adversaire(adversaire, personnage):
-    action = random.choice(['attaquer', 'esquiver'])
+def FncActionEnnemie(ennemie, character):
+    action = random.choice(['Attack', 'Dodge'])
 
-    if action == 'attaquer':
-        attaque_adversaire = random.randint(10, 30)
-        characters[personnage]['vie'] -= attaque_adversaire
-        characters[personnage]['vie'] = max(0, characters[personnage]['vie']) # Evite la condition if
-        return f"{adversaire} vous a attaqué et vous a infligé {attaque_adversaire} points de dégâts." if characters[personnage]['vie'] > 0 else "Vous êtes mort ..."
+    if action == 'Attack':
+        attack_ennemie = random.randint(10, 30)
+        characters[character]['hp'] -= attack_ennemie
+        characters[character]['hp'] = max(0, characters[character]['hp']) # Evite la condition if
+        return f"{ennemie} vous a attaqué et vous a infligé {attack_ennemie} points de dégâts." if characters[character]['vie'] > 0 else "Vous êtes mort ..."
 
-    elif action == 'esquiver':
-        return f"{adversaire} a esquivé votre attaque." if esquiver() else ''
+    elif action == 'Dodge':
+        return f"{ennemie} a esquivé votre attaque." if FncDodge() else ''
+
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        session['personnage'] = request.form['personnage']
-        return redirect('/combat')
+        session['character'] = request.form['character']
+        return redirect('/fight')
     return render_template('index.html')
 
-@app.route('/combat', methods=['GET', 'POST'])
-def combat():
-    if 'personnage' not in session:
+
+@app.route('/fight', methods=['GET', 'POST'])
+def fight():
+    if 'character' not in session:
         return redirect('/')
 
-    personnage = session['personnage']
-    if 'adversaire' not in session:
-        session['adversaire'] = random.choice(list(adversaires.keys()))
+    character = session['character']
+    if 'ennemie' not in session:
+        session['character'] = random.choice(list(ennemies.keys()))
 
-    adversaire_actuel = session['adversaire']
+    actual_ennemie = session['ennemie']
     message = ""
 
     if request.method == 'POST':
         action = request.form['action']
 
-        if action == 'attaquer':
-            message = attaquer(adversaire_actuel, personnage)
-            if adversaires[adversaire_actuel]['vie'] <= 0:
-                del adversaires[adversaire_actuel]
-                session.pop('adversaire', None) # Ajoute un défaut pour éviter KeyError
+        if action == 'attack':
+            message = FncAttack(actual_ennemie, character)
+            if ennemies[actual_ennemie]['hp'] <= 0:
+                del ennemies[actual_ennemie]
+                session.pop('ennemie', None) # Ajoute un défaut pour éviter KeyError
 
-                if not adversaires:
+                if not ennemies:
                     return "Félicitations ! Vous avez vaincu tous les adversaires."
                 else:
-                    return render_template('combatGagne.html', adversaire_actuel=adversaire_actuel)
+                    return render_template('combatGagne.html', actual_ennemie=actual_ennemie)
 
-        elif action == 'esquiver':
-            message = "Vous avez esquivé l'attaque!" if esquiver() else action_adversaire(adversaire_actuel, personnage)
+        elif action == 'dodge':
+            message = "Vous avez esquivé l'attaque!" if FncDodge() else FncActionEnnemie(actual_ennemie, character)
 
-            if characters[personnage]['vie'] <= 0:
+            if characters[character]['hp'] <= 0:
                 return "Vous êtes mort ..."
 
-    return render_template('combat.html', personnage=personnage, adversaire=adversaire_actuel, adversaires=adversaires, characters=characters, message=message)
+    return render_template('combat.html', character=character, ennemie=actual_ennemie, ennemies=ennemies, characters=characters, message=message)
+
 
 if __name__ == '__main__':
     app.run(debug=True) # Ajout d'un mode de débogage
